@@ -1,6 +1,6 @@
-# Getting Started with Create React App
+# Reece Lardy Portfolio Website
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Hosted at [https://reece-lardy.web.app/](https://reece-lardy.web.app/)
 
 ## Available Scripts
 
