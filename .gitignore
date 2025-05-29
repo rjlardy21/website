@@ -16,6 +16,7 @@
 /build
 
 # misc
+client_secret_986088841113-l8rqvoou2v7bbh9h3m9pgql79f8cs4m9.apps.googleusercontent.com.json
 .DS_Store
 .env.local
 .env.development.local
