@@ -1,30 +1,21 @@
-import React, {Component} from 'react';
+import React from 'react';
+import { Box, Typography } from '@mui/material';
 
 
-class About extends Component {
-  render() {
+function About({ data }) {
+  const about = data.About || "No about information available.";
+
     return (
-      <div className="condiv">
-        <h1 className="subtopic">About Me</h1>
-        <h3>Hey there,</h3>
-        <h1>{"I'm Reece Lardy"}</h1>
-        <h3>Software <u>Developer</u> | Computer <u>Engineer</u></h3>
-        <br></br>
-        <p>I started my journey in the world of computers at young age,
-          and I am now 22 years old. I am a talented individual with strong communication skills, team spirit, and B.S.
-          in Computer Engineering from the University of Wisconsin-Madison.
-        </p>
-        <br></br>
-        <p>I am in search of a full-time position as a Software Engineer. I bring expertise in writing full-stack code
-          to support multiple
-          platforms, including web, android, and iOS, and a solid grasp of algorithms, databases, data structures,
-          and object-oriented designs. I have quality experience using industry-standard technologies, and am excited to
-          join the workforce after college.
-        </p>
-
-      </div>
-    )
+      <Box sx={{ bgcolor: 'background.paper', borderRadius: 3, p: { xs: 2, md: 6 }, boxShadow: 2, mt: 4 }}>
+        <Typography variant="h3" className="subtopic" gutterBottom>About Me</Typography>
+        <Typography variant="h5" gutterBottom>Hey there,</Typography>
+        <Typography variant="h4" fontWeight={700} gutterBottom>I'm Reece Lardy</Typography>
+        <Typography variant="h6" gutterBottom>
+          Software <u>Developer</u> | Computer <u>Engineer</u>
+        </Typography>
+        <Typography variant="body1" sx={{ mt: 3 }}>{about}</Typography>
+      </Box>
+    );
   }
-}
 
-export default About
+export default About;
