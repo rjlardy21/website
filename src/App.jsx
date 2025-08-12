@@ -60,20 +60,45 @@ const theme = createTheme({
 });
 
 function App() {
-  const [sheetData, setSheetData] = useState(null);
+  const [sheetData, setSheetData] = useState({ sections: [], contact: [] });
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Fetch both tabs in parallel
-    Promise.all([
-      fetch('https://api.sheetbest.com/sheets/52912e65-7bdc-42e8-9992-b65e175b0b70/tabs/Sections').then(res => res.json()),
-      fetch('https://api.sheetbest.com/sheets/52912e65-7bdc-42e8-9992-b65e175b0b70/tabs/Contact').then(res => res.json())
-    ])
-      .then(([sectionsData, contactData]) => {
-        setSheetData({
-          sections: sectionsData,
-          contact: contactData
+    // Fetch Sections tab
+    const fetchSections = fetch(
+      'https://docs.google.com/spreadsheets/d/1cfbNbcYkw_frbhe-Jgq8OJLi9DKR0YOvxz4XvBs3Qtw/gviz/tq?tqx=out:json&sheet=Sections'
+    )
+      .then(res => res.text())
+      .then(text => {
+        const json = JSON.parse(text.substring(47, text.length - 2));
+        const cols = json.table.cols.map(col => col.label);
+        return json.table.rows.map(row =>
+          row.c.reduce((acc, cell, i) => {
+            acc[cols[i]] = cell ? cell.v : '';
+            return acc;
+          }, {})
+        );
+      });
+    // Fetch Contact tab
+    const fetchContact = fetch(
+      'https://docs.google.com/spreadsheets/d/1cfbNbcYkw_frbhe-Jgq8OJLi9DKR0YOvxz4XvBs3Qtw/gviz/tq?tqx=out:json&sheet=Contact'
+    )
+      .then(res => res.text())
+      .then(text => {
+        const json = JSON.parse(text.substring(47, text.length - 2));
+        const rows = json.table.rows;
+        // Use first row as keys, second row as values
+        const keys = rows[0].c.map(cell => (cell && cell.v ? cell.v : ''));
+        const values = rows[1].c.map(cell => (cell && cell.v ? cell.v : ''));
+        const contactObj = {};
+        keys.forEach((key, i) => {
+          if (key) contactObj[key] = values[i] || '';
         });
+        return contactObj;
+      });
+    Promise.all([fetchSections, fetchContact])
+      .then(([sections, contact]) => {
+        setSheetData({ sections, contact });
         setLoading(false);
       })
       .catch(() => setLoading(false));
@@ -87,7 +112,7 @@ function App() {
       </Box>
     </ThemeProvider>
   );
-  if (!sheetData) return (
+  if (!sheetData.sections.length && !sheetData.contact.length) return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <Box display="flex" justifyContent="center" alignItems="center" minHeight="100vh" bgcolor="background.default">
@@ -124,11 +149,11 @@ function App() {
           <Container maxWidth="md" sx={{ mt: 8, mb: 8 }}>
             <Routes>
               <Route exact path="/" element={<Home data={sheetData.sections} />} />
-              <Route path="/about" element={<About data={sheetData.contact[0]} />} />
+              <Route path="/about" element={<About data={sheetData.contact} />} />
               <Route path="/education" element={<Education data={sheetData.sections} />} />
               <Route path="/experience" element={<Experience data={sheetData.sections} />} />
               <Route path="/resume" element={<Resume />} />
-              <Route path="/contact" element={<Contact data={sheetData.contact[0]} />} />
+              <Route path="/contact" element={<Contact data={sheetData.contact} />} />
             </Routes>
           </Container>
         </Router>
