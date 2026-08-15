@@ -1,0 +1,6 @@
+# Claude Code local tooling (not part of the app)
+/.claude/
+
+# Stray/orphaned lockfile at repo root (the real project lives in
+# "Portfolio_Website_React JS/")
+/package-lock.json
