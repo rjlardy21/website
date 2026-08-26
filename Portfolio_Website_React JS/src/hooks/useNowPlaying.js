@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 
-const REFRESH_INTERVAL_MS = 30 * 1000; // Spotify's own "now playing" state can change in seconds
+const REFRESH_INTERVAL_MS = 3 * 60 * 1000; // re-poll every 3 minutes while the page is open
 
 export function useNowPlaying() {
     const [state, setState] = useState({ status: 'loading', data: null, error: null });

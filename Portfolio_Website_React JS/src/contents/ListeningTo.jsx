@@ -10,7 +10,7 @@ function ListeningTo() {
             <h1 className="section-title">What I&apos;m Listening To</h1>
             <p className="section-intro">
                 Pulled live from my Spotify account through a small serverless proxy that keeps my
-                credentials off this site entirely &mdash; refreshes every 30 seconds.
+                credentials off this site entirely &mdash; refreshes every 3 minutes.
             </p>
 
             {status === 'loading' && <p className="section-intro">Checking Spotify&hellip;</p>}
