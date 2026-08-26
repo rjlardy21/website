@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import Navitem from './Navitem';
 import Social from './Social';
-import headshot from '../img/reece_headshot.png';
+import headshot from '../img/reece_headshot.webp';
 
 const NAV_ITEMS = [
     { item: 'Home', tolink: '/', icon: 'fas fa-home', exact: true },

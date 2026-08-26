@@ -1,16 +1,14 @@
 import React from 'react';
 import ResumeEntryCard from '../components/ResumeEntryCard';
-import DataSyncStatus from '../components/DataSyncStatus';
 import { useResumeSheet } from '../context/ResumeSheetContext';
 
 function Experience() {
-    const { status, experience, error, updatedAt, refresh } = useResumeSheet();
+    const { experience } = useResumeSheet();
 
     return (
         <div className="condiv">
             <p className="eyebrow">Where I&apos;ve worked</p>
             <h1 className="section-title">Experience</h1>
-            <DataSyncStatus status={status} error={error} updatedAt={updatedAt} refresh={refresh} showTimestamp={false} />
 
             {experience.length === 0 ? (
                 <p className="section-intro">No experience entries yet.</p>

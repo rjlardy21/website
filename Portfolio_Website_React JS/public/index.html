@@ -28,8 +28,32 @@
     <title>Reece Lardy | Software Engineer</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
-    <script src="https://kit.fontawesome.com/2cba884da3.js" crossorigin="anonymous"></script>
+    <link rel="preconnect" href="https://ka-f.fontawesome.com" crossorigin />
+    <!--
+      Load the Google Fonts stylesheet without blocking first paint: fetch it
+      at low priority (media="print" is never render-blocking), then swap it
+      to the real media type once loaded. The <noscript> fallback covers
+      JS-disabled browsers. font-display=swap (in the URL) still avoids
+      invisible text once the fonts do arrive.
+    -->
+    <link
+      rel="preload"
+      as="style"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap"
+      rel="stylesheet"
+      media="print"
+      onload="this.media='all'"
+    />
+    <noscript>
+      <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap"
+        rel="stylesheet"
+      />
+    </noscript>
+    <script src="https://kit.fontawesome.com/2cba884da3.js" crossorigin="anonymous" defer></script>
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>

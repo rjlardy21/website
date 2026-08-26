@@ -1,8 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import ReactTypingEffect from 'react-typing-effect';
-import profilepic from '../img/reece_photo.JPG';
-import profilepicFormal from '../img/reece_headshot.png';
+import profilepic from '../img/reece_photo.webp';
+import profilepicFormal from '../img/reece_headshot.webp';
 import bgVideo from '../img/bg.mp4';
 import Social from '../components/Social';
 
@@ -35,8 +35,10 @@ function Home() {
                     eraseDelay={700}
                 />
                 <p className="hero-tagline">
-                    I build reliable, well-crafted software across web, Android, and iOS &mdash;
-                    with a solid foundation in algorithms, databases, and system design.
+                    Engineering clean, maintainable solutions for ambiguous technical problems. My
+                    approach combines deep foundational software practices with modern AI
+                    application development, transforming complex business requirements into
+                    intelligent, secure, and highly scalable digital products.
                 </p>
                 <div className="hero-actions">
                     <Link className="btn btn-primary" to="/contact">

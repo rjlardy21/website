@@ -3,6 +3,19 @@
 // changes materially.
 // Source: https://docs.google.com/spreadsheets/d/1cfbNbcYkw_frbhe-Jgq8OJLi9DKR0YOvxz4XvBs3Qtw
 
+// No "About" row exists in the sheet yet - this is a draft grounded only in
+// facts already present in the Experience/Education rows above (no invented
+// personal details). Add a `Section: About` row to the sheet (Title = a
+// short headline, Description = one paragraph per line) to replace this.
+export const about = {
+    headline: 'Software Engineer',
+    paragraphs: [
+        "I'm a software engineer based in the Minneapolis area, currently leading engineering work at Northmarq, where I migrated our corporate site from an outsourced vendor to a fully in-house platform on Microsoft Azure.",
+        "Before that, I spent four and a half years at Sportradar building API infrastructure, cloud systems on AWS, and security tooling, and mentoring new engineers along the way.",
+        "I hold a B.S. in Computer Engineering from the University of Wisconsin–Madison, where I graduated on the Dean's Honor List and built embedded systems and 3D web visualizations through coursework and the Software Development Club.",
+    ],
+};
+
 export const experience = [
     {
         title: 'Lead Software Engineer',
