@@ -10,7 +10,7 @@ function Experience() {
         <div className="condiv">
             <p className="eyebrow">Where I&apos;ve worked</p>
             <h1 className="section-title">Experience</h1>
-            <DataSyncStatus status={status} error={error} updatedAt={updatedAt} refresh={refresh} />
+            <DataSyncStatus status={status} error={error} updatedAt={updatedAt} refresh={refresh} showTimestamp={false} />
 
             {experience.length === 0 ? (
                 <p className="section-intro">No experience entries yet.</p>

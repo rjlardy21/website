@@ -1,13 +1,13 @@
 import React from 'react';
 
-function DataSyncStatus({ status, error, updatedAt, refresh }) {
+function DataSyncStatus({ status, error, updatedAt, refresh, showTimestamp = true }) {
     return (
         <div className="data-status">
             {status === 'loading' && <span>Syncing with the sheet&hellip;</span>}
             {status === 'ready' && (
                 <span>
                     <i className="fas fa-circle status-dot status-dot-live"></i>
-                    Live &mdash; last synced {updatedAt.toLocaleTimeString()}
+                    {showTimestamp ? <>Live &mdash; last synced {updatedAt.toLocaleTimeString()}</> : 'Live'}
                 </span>
             )}
             {status === 'error' && (

@@ -10,7 +10,7 @@ function Projects() {
         <div className="condiv">
             <p className="eyebrow">Things I&apos;ve built</p>
             <h1 className="section-title">Projects</h1>
-            <DataSyncStatus status={status} error={error} updatedAt={updatedAt} refresh={refresh} />
+            <DataSyncStatus status={status} error={error} updatedAt={updatedAt} refresh={refresh} showTimestamp={false} />
 
             {projects.length === 0 ? (
                 <p className="section-intro">No projects yet.</p>

@@ -10,7 +10,7 @@ function Education() {
         <div className="condiv">
             <p className="eyebrow">Academic background</p>
             <h1 className="section-title">Education</h1>
-            <DataSyncStatus status={status} error={error} updatedAt={updatedAt} refresh={refresh} />
+            <DataSyncStatus status={status} error={error} updatedAt={updatedAt} refresh={refresh} showTimestamp={false} />
 
             {education.length === 0 ? (
                 <p className="section-intro">No education entries yet.</p>
