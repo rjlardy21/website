@@ -8,7 +8,7 @@ const SHEET_ID = '1MoHaOUgwANQGme-gn76gjv-zfgnqdXGjLJD0p-PiEg4';
 const SHEET_GID = '1333714408';
 const SHEET_CSV_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv&gid=${SHEET_GID}`;
 
-const REFRESH_INTERVAL_MS = 5 * 60 * 1000; // re-poll every 5 minutes while the page is open
+const REFRESH_INTERVAL_MS = 12 * 60 * 60 * 1000; // re-poll every 12 hours while the page is open
 
 function toNumber(value) {
     if (value == null) {

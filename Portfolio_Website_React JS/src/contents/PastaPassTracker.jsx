@@ -68,7 +68,7 @@ function PastaPassTracker() {
                 >
                     tracking sheet
                 </a>
-                . Refreshes automatically every 5 minutes.
+                . Refreshes automatically every 12 hours.
             </p>
 
             <DataSyncStatus status={status} error={error} updatedAt={updatedAt} refresh={refresh} />
