@@ -9,7 +9,10 @@
     "rewrites": [
       {
         "source": "/api/now-playing",
-        "function": "nowPlaying"
+        "function": {
+          "functionId": "nowPlaying",
+          "region": "us-central1"
+        }
       },
       {
         "source": "**",
