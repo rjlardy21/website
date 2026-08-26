@@ -1,25 +1,26 @@
 import React from 'react';
-import Widecard from '../components/Widecard';
+import ResumeEntryCard from '../components/ResumeEntryCard';
+import DataSyncStatus from '../components/DataSyncStatus';
+import { useResumeSheet } from '../context/ResumeSheetContext';
 
 function Education() {
+    const { status, education, error, updatedAt, refresh } = useResumeSheet();
+
     return (
         <div className="condiv">
             <p className="eyebrow">Academic background</p>
             <h1 className="section-title">Education</h1>
-            <div className="timeline">
-                <Widecard
-                    title="B.S. Software Engineering"
-                    where="University of Wisconsin-Madison"
-                    from="August 2017"
-                    to="September 2021"
-                />
-                <Widecard
-                    title="PLTW Engineering"
-                    where="East Ridge High School"
-                    from="2013"
-                    to="2017"
-                />
-            </div>
+            <DataSyncStatus status={status} error={error} updatedAt={updatedAt} refresh={refresh} />
+
+            {education.length === 0 ? (
+                <p className="section-intro">No education entries yet.</p>
+            ) : (
+                <div className="timeline">
+                    {education.map((entry) => (
+                        <ResumeEntryCard key={`${entry.title}-${entry.startDate}`} entry={entry} />
+                    ))}
+                </div>
+            )}
         </div>
     );
 }

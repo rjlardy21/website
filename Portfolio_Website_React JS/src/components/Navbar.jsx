@@ -9,8 +9,13 @@ const NAV_ITEMS = [
     { item: 'About', tolink: '/about', icon: 'fas fa-user' },
     { item: 'Education', tolink: '/education', icon: 'fas fa-graduation-cap' },
     { item: 'Experience', tolink: '/experience', icon: 'fas fa-briefcase' },
-    { item: 'Skills', tolink: '/skills', icon: 'fas fa-code' },
+    { item: 'Projects', tolink: '/projects', icon: 'fas fa-project-diagram' },
     { item: 'Contact', tolink: '/contact', icon: 'fas fa-envelope' },
+];
+
+const FUN_NAV_ITEMS = [
+    { item: 'Alex Pasta Pass Tracker', tolink: '/pasta-pass-tracker', icon: 'fas fa-utensils' },
+    { item: "What I'm Listening To", tolink: '/listening-to', icon: 'fas fa-music' },
 ];
 
 function Navbar() {
@@ -47,6 +52,16 @@ function Navbar() {
             <div className="nav-collapsible">
                 <ul>
                     {NAV_ITEMS.map((navItem) => (
+                        <Navitem
+                            key={navItem.tolink}
+                            item={navItem.item}
+                            tolink={navItem.tolink}
+                            icon={navItem.icon}
+                            exact={navItem.exact}
+                        />
+                    ))}
+                    <li className="nav-divider" role="separator"></li>
+                    {FUN_NAV_ITEMS.map((navItem) => (
                         <Navitem
                             key={navItem.tolink}
                             item={navItem.item}

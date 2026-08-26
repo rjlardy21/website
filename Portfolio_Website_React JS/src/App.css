@@ -77,6 +77,7 @@ h1, h2, h3, h4, p {
 /* ---------- App layout ---------- */
 
 .App {
+    position: relative;
     display: flex;
     width: 100vw;
     min-height: 100vh;
@@ -183,6 +184,12 @@ nav ul {
     gap: 6px;
 }
 
+.nav-divider {
+    height: 1px;
+    margin: 14px 14px 16px;
+    background: var(--border-strong);
+}
+
 nav ul li a {
     display: flex;
     align-items: center;
@@ -267,6 +274,25 @@ nav .social a:hover {
     }
 }
 
+/* The Home page hosts a fixed full-viewport background video. A lingering
+   non-"none" transform on an ancestor (even translateY(0) after the fade-in
+   animation completes) turns that ancestor into the containing block for
+   position:fixed descendants, trapping the video inside this box instead of
+   the viewport - so Home gets an opacity-only fade instead of the
+   translateY version every other page uses. */
+.condiv.home {
+    animation: fadeIn 500ms ease both;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
 .eyebrow {
     display: flex;
     align-items: center;
@@ -300,6 +326,52 @@ nav .social a:hover {
     max-width: 640px;
     line-height: 1.7;
     margin-bottom: 36px;
+}
+
+/* ---------- Pass info card (Pasta Pass Tracker) ---------- */
+
+.pass-info-card {
+    padding: 22px 24px;
+    margin-bottom: 28px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+}
+
+.pass-info-card p {
+    font-size: 0.96rem;
+    color: var(--text-secondary);
+    line-height: 1.7;
+    margin-bottom: 16px;
+}
+
+.pass-info-card a {
+    color: var(--accent);
+}
+
+.pass-info-card a:hover {
+    text-decoration: underline;
+}
+
+.pass-info-facts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.pass-info-facts span {
+    padding: 8px 14px;
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    font-size: 0.82rem;
+    color: var(--text-secondary);
+}
+
+.pass-info-facts strong {
+    color: var(--text);
+    font-weight: 600;
+    margin-right: 6px;
 }
 
 /* ---------- Buttons ---------- */
@@ -349,13 +421,33 @@ nav .social a:hover {
 
 /* ---------- Home / hero ---------- */
 
-.home {
+.hero-video-bg {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+}
+
+.hero-video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.hero-video-overlay {
+    position: absolute;
+    inset: 0;
+    background:
+        linear-gradient(135deg, rgba(167, 139, 250, 0.28), rgba(232, 121, 249, 0.16)),
+        linear-gradient(180deg, rgba(15, 9, 26, 0.5) 0%, rgba(10, 14, 20, 0.85) 55%, rgba(10, 14, 20, 0.96) 100%);
+}
+
+.hero-content {
     display: flex;
     justify-content: center;
     flex-direction: column;
     align-items: center;
     text-align: center;
-    min-height: calc(100vh - 192px);
+    min-height: 100%;
 }
 
 .home .eyebrow {
@@ -611,39 +703,265 @@ nav .social a:hover {
     margin-top: 12px;
 }
 
-/* ---------- Skills ---------- */
-
-.skills-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-    gap: 14px;
+.entry-bullets {
+    list-style: none;
+    margin-top: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
 }
 
-.skill-pill {
+.entry-bullets li {
+    position: relative;
+    padding-left: 18px;
+    font-size: 0.92rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+}
+
+.entry-bullets li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.6em;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+}
+
+.entry-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 14px;
+    font-size: 0.88rem;
+    font-weight: 500;
+    color: var(--accent);
+}
+
+.entry-link:hover {
+    text-decoration: underline;
+}
+
+.entry-link i {
+    font-size: 0.78rem;
+}
+
+/* ---------- Stat tiles (Pasta Pass Tracker) ---------- */
+
+.subsection-title {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: var(--text);
+    margin: 48px 0 20px;
+}
+
+.data-status {
     display: flex;
     align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    margin-bottom: 28px;
+}
+
+.status-dot {
+    font-size: 0.5rem;
+    margin-right: 8px;
+}
+
+.status-dot-live {
+    color: #34d399;
+}
+
+.status-dot-offline {
+    color: #f87171;
+}
+
+.refresh-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 14px;
+    border-radius: 999px;
+    border: 1px solid var(--border-strong);
+    background: var(--surface);
+    color: var(--text-secondary);
+    font-size: 0.82rem;
+    cursor: pointer;
+    transition: border-color var(--transition), color var(--transition);
+}
+
+.refresh-btn:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+}
+
+/* ---------- Trend chart ---------- */
+
+.chart-card {
+    position: relative;
+    padding: 28px 24px 24px;
+    margin: 32px 0 40px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+}
+
+.chart-card-head {
+    display: flex;
+    align-items: baseline;
     gap: 12px;
-    padding: 16px 18px;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+}
+
+.chart-card-head h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text);
+}
+
+.chart-card-sub {
+    font-size: 0.82rem;
+    color: var(--text-muted);
+}
+
+.trend-chart {
+    width: 100%;
+    height: auto;
+    overflow: visible;
+}
+
+.chart-gridline {
+    stroke: var(--border);
+    stroke-width: 1;
+}
+
+.chart-axis-label {
+    fill: var(--text-muted);
+    font-family: var(--font-mono);
+    font-size: 11px;
+}
+
+.chart-area {
+    fill: var(--accent);
+    fill-opacity: 0.12;
+    stroke: none;
+}
+
+.chart-line {
+    fill: none;
+    stroke: var(--accent);
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.chart-end-label {
+    fill: var(--text);
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.chart-marker-ring {
+    fill: var(--surface);
+}
+
+.chart-marker {
+    fill: var(--accent);
+}
+
+.chart-hit-target {
+    fill: transparent;
+    cursor: pointer;
+}
+
+.chart-hit-target:focus-visible {
+    fill: var(--accent-soft);
+    outline: none;
+}
+
+.chart-crosshair {
+    stroke: var(--border-strong);
+    stroke-width: 1;
+    pointer-events: none;
+}
+
+.chart-tooltip {
+    position: absolute;
+    transform: translate(-50%, -130%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    padding: 6px 10px;
+    background: var(--bg-elevated);
+    border: 1px solid var(--border-strong);
+    border-radius: var(--radius-sm);
+    box-shadow: var(--shadow);
+    pointer-events: none;
+    white-space: nowrap;
+}
+
+.chart-tooltip strong {
+    font-family: var(--font-mono);
+    font-size: 0.9rem;
+    color: var(--text);
+}
+
+.chart-tooltip span {
+    font-size: 0.72rem;
+    color: var(--text-muted);
+}
+
+.stat-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 16px;
+}
+
+.stat-tile {
+    padding: 22px;
     background: var(--surface);
     border: 1px solid var(--border);
     border-radius: var(--radius);
-    font-weight: 500;
-    font-size: 0.92rem;
-    color: var(--text);
-    transition: border-color var(--transition), transform var(--transition), color var(--transition);
+    transition: border-color var(--transition), transform var(--transition);
 }
 
-.skill-pill:hover {
-    border-color: var(--accent);
-    color: var(--accent);
+.stat-tile:hover {
+    border-color: var(--border-strong);
     transform: translateY(-3px);
 }
 
-.skill-pill i {
-    font-size: 1.1rem;
+.stat-tile i {
+    font-size: 1.05rem;
     color: var(--accent);
-    width: 20px;
-    text-align: center;
+    margin-bottom: 12px;
+    display: block;
+}
+
+.stat-tile-value {
+    font-size: 1.7rem;
+    font-weight: 700;
+    color: var(--text);
+    line-height: 1.2;
+}
+
+.stat-tile-label {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    margin-top: 4px;
+}
+
+.stat-tile-hint {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    margin-top: 8px;
 }
 
 /* ---------- Contact ---------- */
@@ -683,6 +1001,112 @@ nav .social a:hover {
 
 .contact .social {
     justify-content: flex-start;
+}
+
+/* ---------- Now playing (Listening To) ---------- */
+
+.now-playing-card {
+    display: flex;
+    gap: 22px;
+    padding: 22px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    max-width: 520px;
+}
+
+.now-playing-art {
+    width: 120px;
+    height: 120px;
+    border-radius: var(--radius);
+    object-fit: cover;
+    flex-shrink: 0;
+    box-shadow: var(--shadow);
+}
+
+.now-playing-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-width: 0;
+}
+
+.now-playing-status {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 8px;
+}
+
+.now-playing-info h3 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 4px;
+}
+
+.now-playing-info p {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+}
+
+.now-playing-album {
+    color: var(--text-muted) !important;
+    font-size: 0.82rem !important;
+    margin-bottom: 12px;
+}
+
+.eq-bars {
+    display: inline-flex;
+    align-items: flex-end;
+    gap: 2px;
+    height: 12px;
+}
+
+.eq-bars span {
+    width: 3px;
+    background: var(--accent);
+    border-radius: 1px;
+    animation: eqBounce 1s ease-in-out infinite;
+}
+
+.eq-bars span:nth-child(1) {
+    animation-delay: -0.4s;
+}
+
+.eq-bars span:nth-child(2) {
+    animation-delay: -0.2s;
+}
+
+.eq-bars span:nth-child(3) {
+    animation-delay: 0s;
+}
+
+@keyframes eqBounce {
+    0%, 100% {
+        height: 3px;
+    }
+    50% {
+        height: 12px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .eq-bars span {
+        animation: none;
+        height: 8px;
+    }
+}
+
+@media all and (max-width: 480px) {
+    .now-playing-card {
+        flex-direction: column;
+    }
 }
 
 /* ---------- Resume ---------- */

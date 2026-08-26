@@ -3,20 +3,20 @@ import ResumeEntryCard from '../components/ResumeEntryCard';
 import DataSyncStatus from '../components/DataSyncStatus';
 import { useResumeSheet } from '../context/ResumeSheetContext';
 
-function Experience() {
-    const { status, experience, error, updatedAt, refresh } = useResumeSheet();
+function Projects() {
+    const { status, projects, error, updatedAt, refresh } = useResumeSheet();
 
     return (
         <div className="condiv">
-            <p className="eyebrow">Where I&apos;ve worked</p>
-            <h1 className="section-title">Experience</h1>
+            <p className="eyebrow">Things I&apos;ve built</p>
+            <h1 className="section-title">Projects</h1>
             <DataSyncStatus status={status} error={error} updatedAt={updatedAt} refresh={refresh} />
 
-            {experience.length === 0 ? (
-                <p className="section-intro">No experience entries yet.</p>
+            {projects.length === 0 ? (
+                <p className="section-intro">No projects yet.</p>
             ) : (
                 <div className="timeline">
-                    {experience.map((entry) => (
+                    {projects.map((entry) => (
                         <ResumeEntryCard key={`${entry.title}-${entry.startDate}`} entry={entry} />
                     ))}
                 </div>
@@ -25,4 +25,4 @@ function Experience() {
     );
 }
 
-export default Experience;
+export default Projects;
