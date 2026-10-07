@@ -1,7 +1,6 @@
 import React from 'react';
 import StatTile from '../components/StatTile';
-import VisitCard from '../components/VisitCard';
-import VisitTrendChart from '../components/VisitTrendChart';
+import VisitLog from '../components/VisitLog';
 import DataSyncStatus from '../components/DataSyncStatus';
 import { usePastaPassSheet } from '../hooks/usePastaPassSheet';
 
@@ -15,7 +14,6 @@ function PastaPassTracker() {
     const totalVisits = sum(visits, 'visits');
     const totalBreadsticks = sum(visits, 'breadsticks');
     const totalBowlsOrdered = sum(visits, 'bowlsOrdered');
-    const totalNegated = sum(visits, 'priceNegated');
     const totalRecognized = sum(visits, 'timesRecognized');
 
     const weighIns = visits.filter((visit) => visit.weight != null);
@@ -68,7 +66,7 @@ function PastaPassTracker() {
                 >
                     tracking sheet
                 </a>
-                . Refreshes automatically every 12 hours.
+                .
             </p>
 
             <DataSyncStatus status={status} error={error} updatedAt={updatedAt} refresh={refresh} />
@@ -77,7 +75,6 @@ function PastaPassTracker() {
                 <StatTile icon="fas fa-utensils" label="Visits logged" value={totalVisits} />
                 <StatTile icon="fas fa-bread-slice" label="Breadsticks eaten" value={totalBreadsticks} />
                 <StatTile icon="fas fa-utensil-spoon" label="Bowls ordered" value={totalBowlsOrdered} />
-                <StatTile icon="fas fa-dollar-sign" label="Value negated" value={`$${totalNegated}`} />
                 <StatTile
                     icon="fas fa-user-tie"
                     label="Times recognized by staff"
@@ -99,20 +96,11 @@ function PastaPassTracker() {
                 />
             </div>
 
-            {visits.length > 0 && <VisitTrendChart visits={visits} />}
-
             <h2 className="subsection-title">Visit log</h2>
             {visits.length === 0 ? (
                 <p className="section-intro">No visits logged yet &mdash; check back after the next trip.</p>
             ) : (
-                <div className="timeline">
-                    {visits
-                        .slice()
-                        .reverse()
-                        .map((visit) => (
-                            <VisitCard key={visit.date} visit={visit} />
-                        ))}
-                </div>
+                <VisitLog visits={visits} />
             )}
         </div>
     );

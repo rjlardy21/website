@@ -1,17 +1,22 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNowPlaying } from '../hooks/useNowPlaying';
+import { timeAgo } from '../utils/timeAgo';
 
 function ListeningTo() {
     const { status, data, error, refresh } = useNowPlaying();
+
+    // Re-render once a minute so "12 minutes ago" keeps counting up on its own.
+    const [now, setNow] = useState(Date.now());
+    useEffect(() => {
+        const tick = setInterval(() => setNow(Date.now()), 60 * 1000);
+        return () => clearInterval(tick);
+    }, []);
 
     return (
         <div className="condiv">
             <p className="eyebrow">Side project</p>
             <h1 className="section-title">What I&apos;m Listening To</h1>
-            <p className="section-intro">
-                Pulled live from my Spotify account through a small serverless proxy that keeps my
-                credentials off this site entirely &mdash; refreshes every 3 minutes.
-            </p>
+            <p className="section-intro">Straight from my Spotify account.</p>
 
             {status === 'loading' && <p className="section-intro">Checking Spotify&hellip;</p>}
 
@@ -56,10 +61,10 @@ function ListeningTo() {
                                         <span></span>
                                         <span></span>
                                     </span>
-                                    Now playing
+                                    Listening now
                                 </>
                             ) : (
-                                'Last played'
+                                `Played ${(data.playedAt && timeAgo(data.playedAt, now)) || 'recently'}`
                             )}
                         </span>
                         <h3>{data.track.name}</h3>

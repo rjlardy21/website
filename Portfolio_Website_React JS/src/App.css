@@ -799,125 +799,6 @@ nav .social a:hover {
     color: var(--accent);
 }
 
-/* ---------- Trend chart ---------- */
-
-.chart-card {
-    position: relative;
-    padding: 28px 24px 24px;
-    margin: 32px 0 40px;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-lg);
-}
-
-.chart-card-head {
-    display: flex;
-    align-items: baseline;
-    gap: 12px;
-    flex-wrap: wrap;
-    margin-bottom: 20px;
-}
-
-.chart-card-head h3 {
-    font-size: 1rem;
-    font-weight: 600;
-    color: var(--text);
-}
-
-.chart-card-sub {
-    font-size: 0.82rem;
-    color: var(--text-muted);
-}
-
-.trend-chart {
-    width: 100%;
-    height: auto;
-    overflow: visible;
-}
-
-.chart-gridline {
-    stroke: var(--border);
-    stroke-width: 1;
-}
-
-.chart-axis-label {
-    fill: var(--text-muted);
-    font-family: var(--font-mono);
-    font-size: 11px;
-}
-
-.chart-area {
-    fill: var(--accent);
-    fill-opacity: 0.12;
-    stroke: none;
-}
-
-.chart-line {
-    fill: none;
-    stroke: var(--accent);
-    stroke-width: 2;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-}
-
-.chart-end-label {
-    fill: var(--text);
-    font-family: var(--font-mono);
-    font-size: 12px;
-    font-weight: 600;
-}
-
-.chart-marker-ring {
-    fill: var(--surface);
-}
-
-.chart-marker {
-    fill: var(--accent);
-}
-
-.chart-hit-target {
-    fill: transparent;
-    cursor: pointer;
-}
-
-.chart-hit-target:focus-visible {
-    fill: var(--accent-soft);
-    outline: none;
-}
-
-.chart-crosshair {
-    stroke: var(--border-strong);
-    stroke-width: 1;
-    pointer-events: none;
-}
-
-.chart-tooltip {
-    position: absolute;
-    transform: translate(-50%, -130%);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 2px;
-    padding: 6px 10px;
-    background: var(--bg-elevated);
-    border: 1px solid var(--border-strong);
-    border-radius: var(--radius-sm);
-    box-shadow: var(--shadow);
-    pointer-events: none;
-    white-space: nowrap;
-}
-
-.chart-tooltip strong {
-    font-family: var(--font-mono);
-    font-size: 0.9rem;
-    color: var(--text);
-}
-
-.chart-tooltip span {
-    font-size: 0.72rem;
-    color: var(--text-muted);
-}
-
 .stat-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
@@ -1001,6 +882,219 @@ nav .social a:hover {
 
 .contact .social {
     justify-content: flex-start;
+}
+
+/* ---------- Visit log (Pasta Pass Tracker) ---------- */
+
+.visit-log {
+    display: flex;
+    flex-direction: column;
+    gap: 36px;
+}
+
+.visit-month-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+    padding-bottom: 12px;
+    margin-bottom: 14px;
+    border-bottom: 1px solid var(--border-strong);
+}
+
+.visit-month-head h3 {
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--text);
+}
+
+.visit-month-head span {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    color: var(--text-muted);
+}
+
+.visit-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.visit-row {
+    display: grid;
+    grid-template-columns: 56px minmax(0, 1fr) auto;
+    grid-template-areas:
+        'date meal stats'
+        'date meta meta';
+    column-gap: 20px;
+    row-gap: 12px;
+    align-items: center;
+    padding: 16px 20px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    transition: border-color var(--transition), background var(--transition);
+}
+
+.visit-row:hover {
+    background: var(--surface-hover);
+    border-color: var(--border-strong);
+}
+
+.visit-date {
+    grid-area: date;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 56px;
+    height: 56px;
+    border-radius: var(--radius-sm);
+    background: var(--accent-soft);
+}
+
+.visit-day {
+    font-size: 1.35rem;
+    font-weight: 700;
+    line-height: 1;
+    color: var(--accent-strong);
+}
+
+.visit-weekday {
+    margin-top: 4px;
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+}
+
+.visit-meal {
+    grid-area: meal;
+    min-width: 0;
+}
+
+.visit-meal h4 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text);
+}
+
+.visit-meal p {
+    margin-top: 2px;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+}
+
+.visit-stats {
+    grid-area: stats;
+    display: flex;
+    gap: 24px;
+}
+
+.visit-stat dt {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+}
+
+.visit-stat dd {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin-top: 2px;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text);
+}
+
+.eaten {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.eaten-bar {
+    display: block;
+    width: 44px;
+    height: 6px;
+    border-radius: 999px;
+    background: var(--border-strong);
+    overflow: hidden;
+}
+
+.eaten-bar span {
+    display: block;
+    height: 100%;
+    border-radius: 999px;
+    background: var(--accent);
+}
+
+.eaten-label {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    font-weight: 400;
+    color: var(--text-muted);
+    white-space: nowrap;
+}
+
+.visit-meta {
+    grid-area: meta;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 18px;
+    padding-top: 12px;
+    border-top: 1px solid var(--border);
+    font-size: 0.82rem;
+    color: var(--text-secondary);
+}
+
+.visit-meta span {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.visit-meta i {
+    width: 14px;
+    text-align: center;
+    font-size: 0.78rem;
+    color: var(--accent);
+}
+
+/* Stack the row when its column is narrow: phones, and the 900-1060px band
+   where the sidebar is still showing. */
+@media (min-width: 901px) and (max-width: 1060px), (max-width: 640px) {
+    .visit-row {
+        grid-template-columns: 52px minmax(0, 1fr);
+        grid-template-areas:
+            'date meal'
+            'stats stats'
+            'meta meta';
+        column-gap: 16px;
+        padding: 14px;
+    }
+
+    .visit-date {
+        width: 52px;
+        height: 52px;
+    }
+
+    .visit-stats {
+        justify-content: space-between;
+        gap: 12px;
+        padding-top: 12px;
+        border-top: 1px solid var(--border);
+    }
+
+    .visit-meta {
+        padding-top: 0;
+        border-top: none;
+    }
 }
 
 /* ---------- Now playing (Listening To) ---------- */
