@@ -11,10 +11,6 @@ function Contact() {
                 to get in touch:
             </p>
             <div className="contact-list">
-                <a className="contact-row" href="tel:+16512603257">
-                    <i className="fas fa-phone-alt"></i>
-                    <span>(651) 260-3257</span>
-                </a>
                 <a className="contact-row" href="mailto:rjlardy21@gmail.com">
                     <i className="fas fa-envelope"></i>
                     <span>rjlardy21@gmail.com</span>

@@ -1,7 +1,6 @@
 import React from 'react';
 import StatTile from '../components/StatTile';
 import VisitLog from '../components/VisitLog';
-import DataSyncStatus from '../components/DataSyncStatus';
 import { usePastaPassSheet } from '../hooks/usePastaPassSheet';
 
 function sum(visits, field) {
@@ -9,7 +8,7 @@ function sum(visits, field) {
 }
 
 function PastaPassTracker() {
-    const { status, visits, startingWeight, error, updatedAt, refresh } = usePastaPassSheet();
+    const { visits, startingWeight } = usePastaPassSheet();
 
     const totalVisits = sum(visits, 'visits');
     const totalBreadsticks = sum(visits, 'breadsticks');
@@ -55,21 +54,6 @@ function PastaPassTracker() {
                     </span>
                 </div>
             </div>
-
-            <p className="section-intro">
-                Tracking every trip on Alex&apos;s Never Ending Pasta Pass &mdash; pulled live from
-                the{' '}
-                <a
-                    href="https://docs.google.com/spreadsheets/d/1MoHaOUgwANQGme-gn76gjv-zfgnqdXGjLJD0p-PiEg4"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    tracking sheet
-                </a>
-                .
-            </p>
-
-            <DataSyncStatus status={status} error={error} updatedAt={updatedAt} refresh={refresh} />
 
             <div className="stat-grid">
                 <StatTile icon="fas fa-utensils" label="Visits logged" value={totalVisits} />

@@ -8,10 +8,6 @@ function ListeningTo() {
         <div className="condiv">
             <p className="eyebrow">Side project</p>
             <h1 className="section-title">What I&apos;m Listening To</h1>
-            <p className="section-intro">
-                Pulled live from my Spotify account through a small serverless proxy that keeps my
-                credentials off this site entirely.
-            </p>
 
             {status === 'loading' && <p className="section-intro">Checking Spotify&hellip;</p>}
 

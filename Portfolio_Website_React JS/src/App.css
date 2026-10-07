@@ -757,29 +757,6 @@ nav .social a:hover {
     margin: 48px 0 20px;
 }
 
-.data-status {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    flex-wrap: wrap;
-    font-size: 0.85rem;
-    color: var(--text-secondary);
-    margin-bottom: 28px;
-}
-
-.status-dot {
-    font-size: 0.5rem;
-    margin-right: 8px;
-}
-
-.status-dot-live {
-    color: #34d399;
-}
-
-.status-dot-offline {
-    color: #f87171;
-}
-
 .refresh-btn {
     display: inline-flex;
     align-items: center;
