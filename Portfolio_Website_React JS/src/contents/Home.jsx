@@ -46,6 +46,13 @@ function Home() {
                     </Link>
                     <a
                         className="btn btn-secondary"
+                        href="/Reece_Lardy_Resume.pdf"
+                        download="Reece_Lardy_Resume.pdf"
+                    >
+                        <i className="fas fa-download"></i> Download resume
+                    </a>
+                    <a
+                        className="btn btn-secondary"
                         href="https://github.com/rjlardy21"
                         target="_blank"
                         rel="noopener noreferrer"
