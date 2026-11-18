@@ -82,9 +82,11 @@ h1, h2, h3, h4, p {
     width: 100vw;
     min-height: 100vh;
     background:
-        radial-gradient(circle at 15% 0%, rgba(167, 139, 250, 0.09), transparent 40%),
-        radial-gradient(circle at 85% 100%, rgba(232, 121, 249, 0.07), transparent 45%),
+        radial-gradient(60% 50% at 88% 6%, rgba(167, 139, 250, 0.2), transparent 70%),
+        radial-gradient(55% 45% at 10% 100%, rgba(232, 121, 249, 0.13), transparent 70%),
+        radial-gradient(40% 35% at 60% 55%, rgba(99, 102, 241, 0.07), transparent 70%),
         var(--bg);
+    background-attachment: fixed;
 }
 
 /* ---------- Sidebar navigation ---------- */
@@ -151,6 +153,7 @@ nav {
     font-family: var(--font-mono);
 }
 
+
 .nav-toggle {
     display: none;
     align-items: center;
@@ -179,14 +182,49 @@ nav {
 }
 
 nav ul {
+    position: relative;
     display: flex;
     flex-direction: column;
     gap: 6px;
 }
 
+.nav-label {
+    margin: 2px 0 2px;
+    padding: 0 14px;
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+}
+
+/* One highlight that glides to whichever link is active */
+.nav-highlight {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    border-radius: var(--radius-sm);
+    background: var(--accent-soft);
+    border-left: 2px solid var(--accent);
+    pointer-events: none;
+    transition: transform 380ms cubic-bezier(0.22, 1, 0.36, 1), height 380ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+nav ul li:not(.nav-highlight) {
+    position: relative;
+    z-index: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .nav-highlight {
+        transition: none;
+    }
+}
+
 .nav-divider {
     height: 1px;
-    margin: 14px 14px 16px;
+    margin: 12px 14px 14px;
     background: var(--border-strong);
 }
 
@@ -218,8 +256,6 @@ nav ul li a:hover {
 
 nav ul li a.active {
     color: var(--accent);
-    background: var(--accent-soft);
-    border-left-color: var(--accent);
 }
 
 nav ul li a.active i {
@@ -433,33 +469,56 @@ nav .social a:hover {
     object-fit: cover;
 }
 
+/* Dark on the left where the text sits, lighter on the right so the smoke
+   shows through. Narrow screens stack everything, so they get an even,
+   darker wash instead (see the max-width: 1100px block below). */
 .hero-video-overlay {
     position: absolute;
     inset: 0;
     background:
-        linear-gradient(135deg, rgba(167, 139, 250, 0.28), rgba(232, 121, 249, 0.16)),
-        linear-gradient(180deg, rgba(15, 9, 26, 0.5) 0%, rgba(10, 14, 20, 0.85) 55%, rgba(10, 14, 20, 0.96) 100%);
+        linear-gradient(90deg, rgba(10, 14, 20, 0.5) var(--sidebar-width), rgba(10, 14, 20, 0.86) calc(var(--sidebar-width) + 120px), rgba(10, 14, 20, 0.62) 48%, rgba(10, 14, 20, 0.28) 78%, rgba(10, 14, 20, 0.22) 100%),
+        linear-gradient(180deg, rgba(10, 14, 20, 0) 55%, rgba(10, 14, 20, 0.7) 100%),
+        linear-gradient(135deg, rgba(167, 139, 250, 0.14), rgba(232, 121, 249, 0.08));
+}
+
+.condiv.home {
+    max-width: 1040px;
 }
 
 .hero-content {
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 240px;
+    align-content: center;
     align-items: center;
-    text-align: center;
+    column-gap: 64px;
     min-height: 100%;
+    text-align: left;
 }
 
-.home .eyebrow {
-    margin: 0 0 20px;
+.hero-photo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+}
+
+/* Staggered entrance */
+.reveal {
+    animation: fadeInUp 650ms cubic-bezier(0.22, 1, 0.36, 1) both;
+    animation-delay: var(--delay, 0ms);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .reveal {
+        animation: none;
+    }
 }
 
 .profilepic-flip {
     position: relative;
     display: block;
-    width: 168px;
-    height: 168px;
-    margin-bottom: 10px;
+    width: 224px;
+    height: 224px;
     padding: 0;
     border: 0;
     background: none;
@@ -491,7 +550,7 @@ nav .social a:hover {
     object-fit: cover;
     border-radius: 50%;
     border: 3px solid var(--border-strong);
-    box-shadow: 0 0 0 6px var(--accent-soft);
+    box-shadow: 0 0 0 6px var(--accent-soft), 0 0 70px rgba(167, 139, 250, 0.38);
     backface-visibility: hidden;
 }
 
@@ -520,13 +579,97 @@ nav .social a:hover {
 .flip-hint {
     display: inline-flex;
     align-items: center;
-    gap: 6px;
-    margin-bottom: 20px;
+    gap: 8px;
+    padding: 6px 14px;
+    border-radius: 999px;
+    background: rgba(10, 14, 20, 0.66);
+    border: 1px solid var(--border-strong);
     font-family: var(--font-mono);
-    font-size: 0.72rem;
+    font-size: 0.74rem;
     letter-spacing: 0.06em;
     text-transform: uppercase;
-    color: var(--text-muted);
+    color: #c4cddb;
+    cursor: pointer;
+    transition: border-color var(--transition), color var(--transition);
+}
+
+.flip-hint-icon {
+    color: var(--accent);
+}
+
+.flip-hint:not(.is-touched) .flip-hint-icon {
+    animation: flipHintSpin 3.2s linear infinite;
+}
+
+.hero-photo:hover .flip-hint,
+.flip-hint:hover {
+    border-color: var(--accent);
+    color: var(--text);
+}
+
+.flip-hint-hover {
+    display: none;
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .flip-hint-hover {
+        display: inline;
+    }
+
+    .flip-hint-touch {
+        display: none;
+    }
+
+    .profilepic-flip:hover {
+        transform: scale(1.04);
+    }
+}
+
+.profilepic-flip {
+    transition: transform 280ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Expanding ring that invites a click until the photo has been flipped once */
+.profilepic-flip:not(.is-touched)::after {
+    content: '';
+    position: absolute;
+    inset: -4px;
+    border-radius: 50%;
+    border: 2px solid var(--accent);
+    pointer-events: none;
+    animation: flipPulse 2.6s ease-out infinite;
+}
+
+@keyframes flipPulse {
+    0% {
+        transform: scale(0.97);
+        opacity: 0.75;
+    }
+    100% {
+        transform: scale(1.25);
+        opacity: 0;
+    }
+}
+
+@keyframes flipHintSpin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .flip-hint:not(.is-touched) .flip-hint-icon,
+    .profilepic-flip:not(.is-touched)::after {
+        animation: none;
+    }
+
+    .profilepic-flip::after {
+        display: none;
+    }
+
+    .profilepic-flip:hover {
+        transform: none;
+    }
 }
 
 .btn-lg {
@@ -554,6 +697,17 @@ nav .social a:hover {
     transition: border-color var(--transition), color var(--transition);
 }
 
+/* On stacked layouts the bottom-right corner collides with the buttons, so tuck it under the header */
+@media all and (max-width: 900px) {
+    .video-toggle {
+        top: 92px;
+        bottom: auto;
+        right: 14px;
+        width: 36px;
+        height: 36px;
+    }
+}
+
 .video-toggle:hover,
 .video-toggle:focus-visible {
     border-color: var(--accent);
@@ -561,31 +715,125 @@ nav .social a:hover {
 }
 
 .hero-name {
-    font-size: 2.75rem;
+    font-size: clamp(2.8rem, 5.2vw, 4.4rem);
     font-weight: 800;
-    letter-spacing: -0.02em;
+    line-height: 1.04;
+    letter-spacing: -0.03em;
     color: var(--text);
-    margin-bottom: 12px;
+    margin-bottom: 14px;
+}
+
+.hero-role {
+    min-height: 2.2rem;
+    margin-bottom: 22px;
 }
 
 .typingeffect {
+    display: inline-flex;
+    align-items: center;
     font-family: var(--font-mono);
-    font-size: 1.35rem;
+    font-size: 1.4rem;
+    line-height: 1.5;
+}
+
+/* The gradient is a fixed width (longest role = 24 characters), so letters
+   keep their color as the text grows instead of shimmering. */
+.typed-text {
+    white-space: pre;
+    background: linear-gradient(90deg, var(--accent), var(--accent-2)) no-repeat;
+    background-size: 25ch 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
     color: var(--accent);
-    margin-bottom: 20px;
-    min-height: 1.7rem;
+}
+
+.typed-cursor {
+    display: inline-block;
+    width: 2px;
+    height: 1.3em;
+    margin-left: 4px;
+    background: var(--accent-2);
+    animation: cursorBlink 1.05s steps(1) infinite;
+}
+
+.typed-cursor.is-static {
+    animation: none;
+}
+
+@keyframes cursorBlink {
+    0%, 55% {
+        opacity: 1;
+    }
+    56%, 100% {
+        opacity: 0;
+    }
+}
+
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
 }
 
 .hero-tagline {
-    font-size: 1.05rem;
-    color: var(--text-secondary);
-    max-width: 520px;
+    font-size: 1.08rem;
+    color: #c6cfdc;
+    max-width: 600px;
     line-height: 1.7;
-    margin: 0 auto;
+    margin: 0;
+    text-shadow: 0 1px 12px rgba(10, 14, 20, 0.8);
 }
 
-.home .social {
-    margin-top: 8px;
+/* Frosted-glass secondary buttons read better over the moving video */
+.home .btn-secondary {
+    background: rgba(10, 14, 20, 0.5);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+}
+
+.home .hero-actions {
+    justify-content: flex-start;
+    margin: 32px 0 0;
+}
+
+/* Below ~1100px the content pane is too narrow for two columns: stack and center */
+@media all and (max-width: 1100px) {
+    .hero-content {
+        grid-template-columns: 1fr;
+        justify-items: center;
+        text-align: center;
+        row-gap: 28px;
+    }
+
+    .hero-photo {
+        order: -1;
+    }
+
+    .home .hero-actions {
+        justify-content: center;
+    }
+
+    .hero-tagline {
+        margin: 0 auto;
+    }
+
+    .profilepic-flip {
+        width: 172px;
+        height: 172px;
+    }
+
+    .hero-video-overlay {
+        background:
+            linear-gradient(180deg, rgba(10, 14, 20, 0.62) 0%, rgba(10, 14, 20, 0.82) 55%, rgba(10, 14, 20, 0.94) 100%),
+            linear-gradient(135deg, rgba(167, 139, 250, 0.16), rgba(232, 121, 249, 0.1));
+    }
 }
 
 /* ---------- Shared page social row (Home / Contact) ---------- */
@@ -1133,18 +1381,43 @@ nav .social a:hover {
 /* ---------- Now playing (Listening To) ---------- */
 
 .now-playing-card {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
     display: flex;
-    gap: 22px;
-    padding: 22px;
+    gap: 26px;
+    padding: 26px;
     background: var(--surface);
-    border: 1px solid var(--border);
+    border: 1px solid var(--border-strong);
     border-radius: var(--radius-lg);
-    max-width: 520px;
+    max-width: 580px;
+}
+
+/* Blurred copy of the album art behind the card, so the glow changes per song */
+.now-playing-glow {
+    position: absolute;
+    inset: -30%;
+    width: 160%;
+    height: 160%;
+    object-fit: cover;
+    filter: blur(48px) saturate(1.7);
+    opacity: 0.42;
+    z-index: -2;
+    pointer-events: none;
+}
+
+.now-playing-card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, rgba(10, 14, 20, 0.35), rgba(10, 14, 20, 0.72));
+    z-index: -1;
+    pointer-events: none;
 }
 
 .now-playing-art {
-    width: 120px;
-    height: 120px;
+    width: 168px;
+    height: 168px;
     border-radius: var(--radius);
     object-fit: cover;
     flex-shrink: 0;
@@ -1171,15 +1444,15 @@ nav .social a:hover {
 }
 
 .now-playing-info h3 {
-    font-size: 1.1rem;
+    font-size: 1.3rem;
     font-weight: 700;
     color: var(--text);
     margin-bottom: 4px;
 }
 
 .now-playing-info p {
-    font-size: 0.9rem;
-    color: var(--text-secondary);
+    font-size: 0.95rem;
+    color: #c6cfdc;
 }
 
 .now-playing-album {
@@ -1275,13 +1548,17 @@ nav .social a:hover {
     }
 
     nav.nav-open .nav-collapsible {
-        max-height: 600px;
+        max-height: 780px;
         margin-top: 24px;
         padding-bottom: 8px;
     }
 
     nav ul li a {
         padding: 13px 14px;
+    }
+
+    .nav-resume {
+        margin-top: 18px;
     }
 
     nav .social {
@@ -1304,7 +1581,11 @@ nav .social a:hover {
     }
 
     .hero-name {
-        font-size: 2.1rem;
+        font-size: 2.6rem;
+    }
+
+    .typingeffect {
+        font-size: 1.15rem;
     }
 
     .section-title {
@@ -1318,5 +1599,402 @@ nav .social a:hover {
 
     .brand-text small {
         display: none;
+    }
+}
+
+
+/* ---------- Availability badge ---------- */
+
+.status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    padding: 6px 14px;
+    border-radius: 999px;
+    background: rgba(34, 197, 94, 0.1);
+    border: 1px solid rgba(74, 222, 128, 0.35);
+    color: #86efac;
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
+.status-dot {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    margin-right: 0;
+    border-radius: 50%;
+    background: #4ade80;
+    box-shadow: 0 0 0 0 rgba(74, 222, 128, 0.6);
+    animation: statusPulse 2.2s ease-out infinite;
+    flex-shrink: 0;
+}
+
+@keyframes statusPulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(74, 222, 128, 0.55);
+    }
+    70%, 100% {
+        box-shadow: 0 0 0 9px rgba(74, 222, 128, 0);
+    }
+}
+
+.contact-status {
+    margin: -14px 0 24px;
+}
+
+.fact-card-status .status-dot {
+    margin-right: 8px;
+}
+
+/* ---------- Scroll reveal ---------- */
+
+.reveal-on-scroll {
+    opacity: 0;
+    transform: translateY(18px);
+    transition: opacity 550ms ease, transform 650ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.reveal-on-scroll.is-visible {
+    opacity: 1;
+    transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .reveal-on-scroll {
+        opacity: 1;
+        transform: none;
+        transition: none;
+    }
+
+    .status-dot {
+        animation: none;
+    }
+}
+
+/* ---------- Timeline rail (Education / Experience / Projects) ---------- */
+
+.timeline {
+    position: relative;
+    padding-left: 34px;
+}
+
+.timeline::before {
+    content: '';
+    position: absolute;
+    left: 11px;
+    top: 28px;
+    bottom: 28px;
+    width: 2px;
+    border-radius: 2px;
+    background: linear-gradient(180deg, var(--accent), rgba(167, 139, 250, 0.12) 85%);
+}
+
+.timeline-item {
+    position: relative;
+}
+
+.timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -29px;
+    top: 31px;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: var(--bg);
+    border: 2px solid var(--accent);
+    box-shadow: 0 0 0 4px var(--bg);
+    transition: background var(--transition), box-shadow var(--transition);
+}
+
+.timeline-item:first-child::before {
+    background: var(--accent);
+    box-shadow: 0 0 0 4px var(--bg), 0 0 16px 2px rgba(167, 139, 250, 0.7);
+}
+
+.timeline-item:hover::before {
+    background: var(--accent);
+}
+
+/* ---------- Featured projects ---------- */
+
+.featured-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.featured-card {
+    padding: 26px 28px;
+    background:
+        linear-gradient(180deg, rgba(167, 139, 250, 0.08), transparent 60%),
+        var(--surface);
+    border: 1px solid rgba(167, 139, 250, 0.3);
+    border-radius: var(--radius-lg);
+}
+
+.featured-card.is-visible {
+    transition: opacity 550ms ease, transform 650ms cubic-bezier(0.22, 1, 0.36, 1), border-color var(--transition), box-shadow var(--transition);
+}
+
+.featured-card.is-visible:hover {
+    border-color: var(--accent);
+    box-shadow: 0 18px 40px -22px rgba(167, 139, 250, 0.55);
+    transform: translateY(-3px);
+}
+
+.featured-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+.featured-head h3 {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--text);
+}
+
+.featured-stack {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    color: var(--accent-strong);
+}
+
+.featured-summary {
+    margin: 8px 0 14px;
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+}
+
+.featured-links {
+    display: flex;
+    gap: 22px;
+    margin-top: 14px;
+    flex-wrap: wrap;
+}
+
+.projects-more {
+    margin-top: 56px;
+}
+
+/* ---------- Contact cards ---------- */
+
+.contact-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+    margin-bottom: 32px;
+}
+
+.contact-card {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 20px 22px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+}
+
+.contact-card.is-visible {
+    transition: opacity 550ms ease, transform 300ms cubic-bezier(0.22, 1, 0.36, 1), border-color var(--transition), background var(--transition), box-shadow var(--transition);
+}
+
+.contact-card.is-visible:hover {
+    border-color: var(--accent);
+    background: var(--surface-hover);
+    transform: translateY(-3px);
+    box-shadow: 0 16px 32px -22px rgba(167, 139, 250, 0.6);
+}
+
+.contact-card-icon {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    background: var(--accent-soft);
+    color: var(--accent);
+    font-size: 1.1rem;
+}
+
+.contact-card-text {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    gap: 2px;
+}
+
+.contact-card-text small {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+}
+
+.contact-card-text strong {
+    font-size: 0.98rem;
+    font-weight: 600;
+    color: var(--text);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+@media all and (max-width: 640px) {
+    .contact-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .timeline {
+        padding-left: 28px;
+    }
+
+    .timeline::before {
+        left: 8px;
+    }
+
+    .timeline-item::before {
+        left: -26px;
+    }
+
+    .now-playing-art {
+        width: 100%;
+        height: auto;
+        aspect-ratio: 1;
+    }
+
+    .now-playing-card {
+        padding: 20px;
+    }
+}
+
+/* ---------- About status card ---------- */
+
+.fact-card-status {
+    border-color: rgba(74, 222, 128, 0.3);
+}
+
+/* ---------- Pass progress (Pasta Pass Tracker) ---------- */
+
+.pass-progress {
+    padding: 20px 24px;
+    margin-bottom: 24px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+}
+
+.pass-progress-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 12px;
+    margin-bottom: 14px;
+}
+
+.pass-progress-head strong {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--text);
+}
+
+.pass-progress-head span {
+    font-family: var(--font-mono);
+    font-size: 0.82rem;
+    color: var(--accent-strong);
+}
+
+.pass-progress-track {
+    height: 12px;
+    border-radius: 999px;
+    background: rgba(148, 163, 184, 0.14);
+    overflow: hidden;
+}
+
+.pass-progress-fill {
+    height: 100%;
+    border-radius: 999px;
+    background: linear-gradient(90deg, var(--accent), var(--accent-2));
+    box-shadow: 0 0 18px rgba(167, 139, 250, 0.6);
+    transition: width 900ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.pass-progress-ends {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--text-muted);
+}
+
+/* ---------- Sidebar resume link ---------- */
+
+.nav-resume {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-top: auto;
+    padding: 10px 14px;
+    border: 1px solid var(--border-strong);
+    border-radius: var(--radius-sm);
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: var(--text);
+    transition: border-color var(--transition), color var(--transition), background var(--transition);
+}
+
+.nav-resume:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    background: var(--accent-soft);
+}
+
+.nav-resume + .social {
+    margin-top: 0;
+    padding-top: 16px;
+}
+
+
+/* ---------- Skip link ---------- */
+
+.skip-link {
+    position: absolute;
+    left: 12px;
+    top: -60px;
+    z-index: 1000;
+    padding: 10px 16px;
+    border-radius: var(--radius-sm);
+    background: var(--accent);
+    color: #1c1030;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: top 160ms ease;
+}
+
+.skip-link:focus {
+    top: 12px;
+}
+
+/* ---------- Frosted sidebar on Home, so the video continues behind it ---------- */
+
+@media (min-width: 901px) {
+    nav.nav-glass {
+        background: rgba(10, 14, 20, 0.5);
+        -webkit-backdrop-filter: blur(22px) saturate(1.2);
+        backdrop-filter: blur(22px) saturate(1.2);
+        border-right-color: rgba(148, 163, 184, 0.16);
     }
 }

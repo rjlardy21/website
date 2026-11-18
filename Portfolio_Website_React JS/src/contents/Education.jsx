@@ -14,8 +14,8 @@ function Education() {
                 <p className="section-intro">No education entries yet.</p>
             ) : (
                 <div className="timeline">
-                    {education.map((entry) => (
-                        <ResumeEntryCard key={`${entry.title}-${entry.startDate}`} entry={entry} />
+                    {education.map((entry, index) => (
+                        <ResumeEntryCard key={`${entry.title}-${entry.startDate}`} entry={entry} index={index} />
                     ))}
                 </div>
             )}

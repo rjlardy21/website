@@ -25,7 +25,7 @@ function ListeningTo() {
                 <div className="pass-info-card">
                     <p>Couldn&apos;t reach Spotify ({error}).</p>
                     <button type="button" className="refresh-btn" onClick={refresh}>
-                        <i className="fas fa-rotate"></i> Try again
+                        <i className="fas fa-sync-alt"></i> Try again
                     </button>
                 </div>
             )}
@@ -37,11 +37,14 @@ function ListeningTo() {
             {status === 'ready' && data && data.track && (
                 <div className="now-playing-card">
                     {data.track.albumArt && (
-                        <img
-                            src={data.track.albumArt}
-                            alt={`${data.track.album || data.track.name} cover art`}
-                            className="now-playing-art"
-                        />
+                        <>
+                            <img src={data.track.albumArt} alt="" aria-hidden="true" className="now-playing-glow" />
+                            <img
+                                src={data.track.albumArt}
+                                alt={`${data.track.album || data.track.name} cover art`}
+                                className="now-playing-art"
+                            />
+                        </>
                     )}
                     <div className="now-playing-info">
                         <span className="now-playing-status">

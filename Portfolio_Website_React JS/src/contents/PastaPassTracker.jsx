@@ -1,10 +1,64 @@
 import React from 'react';
+import Reveal from '../components/Reveal';
 import StatTile from '../components/StatTile';
 import VisitLog from '../components/VisitLog';
 import { usePastaPassSheet } from '../hooks/usePastaPassSheet';
 
 function sum(visits, field) {
     return visits.reduce((total, visit) => total + visit[field], 0);
+}
+
+const DAY_MS = 24 * 60 * 60 * 1000;
+const PASS_START = new Date(2026, 7, 24); // Aug 24, 2026
+const PASS_END = new Date(2026, 10, 22); // Nov 22, 2026
+
+function getPassProgress(now = new Date()) {
+    const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    const total = Math.round((PASS_END - PASS_START) / DAY_MS) + 1;
+    const elapsed = Math.round((today - PASS_START) / DAY_MS) + 1;
+    if (elapsed < 1) {
+        const days = 1 - elapsed;
+        return { state: 'upcoming', total, percent: 0, label: `Starts in ${days} day${days === 1 ? '' : 's'}` };
+    }
+    if (elapsed > total) {
+        return { state: 'ended', total, percent: 100, label: 'Pass window closed' };
+    }
+    const left = total - elapsed;
+    return {
+        state: 'active',
+        total,
+        elapsed,
+        percent: Math.round((elapsed / total) * 100),
+        label: left === 0 ? 'Last day' : `${left} day${left === 1 ? '' : 's'} left`,
+    };
+}
+
+function PassProgress() {
+    const progress = getPassProgress();
+    return (
+        <Reveal className="pass-progress">
+            <div className="pass-progress-head">
+                <strong>
+                    {progress.state === 'active' ? `Day ${progress.elapsed} of ${progress.total}` : 'Pass window'}
+                </strong>
+                <span>{progress.label}</span>
+            </div>
+            <div
+                className="pass-progress-track"
+                role="progressbar"
+                aria-valuemin={0}
+                aria-valuemax={100}
+                aria-valuenow={progress.percent}
+                aria-label="Pass window progress"
+            >
+                <div className="pass-progress-fill" style={{ width: `${progress.percent}%` }}></div>
+            </div>
+            <div className="pass-progress-ends">
+                <span>Aug 24</span>
+                <span>Nov 22</span>
+            </div>
+        </Reveal>
+    );
 }
 
 function PastaPassTracker() {
@@ -54,6 +108,8 @@ function PastaPassTracker() {
                     </span>
                 </div>
             </div>
+
+            <PassProgress />
 
             <div className="stat-grid">
                 <StatTile icon="fas fa-utensils" label="Visits logged" value={totalVisits} />

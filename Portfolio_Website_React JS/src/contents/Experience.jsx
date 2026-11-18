@@ -14,8 +14,8 @@ function Experience() {
                 <p className="section-intro">No experience entries yet.</p>
             ) : (
                 <div className="timeline">
-                    {experience.map((entry) => (
-                        <ResumeEntryCard key={`${entry.title}-${entry.startDate}`} entry={entry} />
+                    {experience.map((entry, index) => (
+                        <ResumeEntryCard key={`${entry.title}-${entry.startDate}`} entry={entry} index={index} />
                     ))}
                 </div>
             )}

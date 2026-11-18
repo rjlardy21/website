@@ -1,10 +1,12 @@
 import React from 'react';
+import Reveal from '../components/Reveal';
 import { useResumeSheet } from '../context/ResumeSheetContext';
+import { OPEN_TO_WORK, OPEN_TO_WORK_LABEL } from '../data/status';
 
 function About() {
     const { about, experience, education } = useResumeSheet();
 
-    const currentRole = experience.find((e) => e.endDate.toLowerCase() === 'present') || experience[0];
+    const latestRole = experience[0];
     const latestEducation = education[0];
 
     return (
@@ -19,33 +21,45 @@ function About() {
                     ))}
                 </div>
                 <div className="about-facts">
-                    {currentRole && (
-                        <div className="fact-card">
-                            <i className="fas fa-briefcase"></i>
+                    {OPEN_TO_WORK && (
+                        <Reveal className="fact-card fact-card-status" delay={0}>
+                            <i className="fas fa-circle-notch"></i>
                             <div>
-                                <h4>Currently</h4>
+                                <h4>Status</h4>
                                 <p>
-                                    {currentRole.title} at {currentRole.org}
+                                    <span className="status-dot" aria-hidden="true"></span>
+                                    {OPEN_TO_WORK_LABEL}: software engineering
                                 </p>
                             </div>
-                        </div>
+                        </Reveal>
+                    )}
+                    {latestRole && (
+                        <Reveal className="fact-card" delay={80}>
+                            <i className="fas fa-briefcase"></i>
+                            <div>
+                                <h4>Most recent role</h4>
+                                <p>
+                                    {latestRole.title} at {latestRole.org}
+                                </p>
+                            </div>
+                        </Reveal>
                     )}
                     {latestEducation && (
-                        <div className="fact-card">
+                        <Reveal className="fact-card" delay={160}>
                             <i className="fas fa-graduation-cap"></i>
                             <div>
                                 <h4>Education</h4>
                                 <p>{latestEducation.org}</p>
                             </div>
-                        </div>
+                        </Reveal>
                     )}
-                    <div className="fact-card">
+                    <Reveal className="fact-card" delay={240}>
                         <i className="fas fa-code"></i>
                         <div>
                             <h4>Focus</h4>
                             <p>Full-stack development, cloud infrastructure, and DevOps</p>
                         </div>
-                    </div>
+                    </Reveal>
                 </div>
             </div>
         </div>
