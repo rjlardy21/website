@@ -7,7 +7,7 @@ function ResumeEntryCard({ entry }) {
                 <div className="card-heading">
                     <h3>{entry.title}</h3>
                     <span className="date-range">
-                        {entry.startDate} &mdash; {entry.endDate}
+                        {entry.startDate} &ndash; {entry.endDate}
                     </span>
                 </div>
                 <h4 className="secondtext">

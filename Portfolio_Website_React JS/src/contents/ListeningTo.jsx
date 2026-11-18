@@ -14,7 +14,7 @@ function ListeningTo() {
             {status === 'not-configured' && (
                 <div className="pass-info-card">
                     <p>
-                        This page isn&apos;t hooked up to Spotify on this deployment yet &mdash; it
+                        This page isn&apos;t hooked up to Spotify on this deployment yet. It
                         needs an <code>/api/now-playing</code> serverless function with Spotify
                         credentials configured as environment variables.
                     </p>

@@ -25,7 +25,7 @@ export const experience = [
         endDate: 'Present',
         bullets: [
             "Led the migration of Northmarq's corporate website from an outsourced consulting vendor to a fully in-house platform, architecting the technical solution end to end while maintaining zero downtime on the live production site.",
-            'Architected a modernized web platform on Microsoft Azure, integrating a Vue.js frontend and .NET CMS gateway with the existing Drupal CMS — preserving working infrastructure investment instead of a full rebuild.',
+            'Architected a modernized web platform on Microsoft Azure, integrating a Vue.js frontend and .NET CMS gateway with the existing Drupal CMS, preserving working infrastructure investment instead of a full rebuild.',
             "Designed and built CI/CD pipelines in Azure DevOps, establishing the team's merge/review process and engineering documentation from the ground up.",
             'Delivered significant, measurable improvements to SEO rankings and site performance scores versus the prior outsourced implementation.',
         ],

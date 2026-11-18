@@ -456,14 +456,27 @@ nav .social a:hover {
 
 .profilepic-flip {
     position: relative;
+    display: block;
     width: 168px;
     height: 168px;
-    margin-bottom: 28px;
+    margin-bottom: 10px;
+    padding: 0;
+    border: 0;
+    background: none;
+    border-radius: 50%;
+    cursor: pointer;
     perspective: 1200px;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.profilepic-flip:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 8px;
 }
 
 .profilepic-flip-inner {
     position: relative;
+    display: block;
     width: 100%;
     height: 100%;
     transform-style: preserve-3d;
@@ -502,6 +515,49 @@ nav .social a:hover {
     .profilepic-flip-inner {
         animation: none;
     }
+}
+
+.flip-hint {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 20px;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+}
+
+.btn-lg {
+    padding: 15px 32px;
+    font-size: 1.02rem;
+    box-shadow: 0 10px 28px -12px rgba(167, 139, 250, 0.55);
+}
+
+.video-toggle {
+    position: fixed;
+    right: 18px;
+    bottom: 18px;
+    z-index: 5;
+    width: 40px;
+    height: 40px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    border: 1px solid var(--border-strong);
+    background: rgba(10, 14, 20, 0.7);
+    color: var(--text);
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: border-color var(--transition), color var(--transition);
+}
+
+.video-toggle:hover,
+.video-toggle:focus-visible {
+    border-color: var(--accent);
+    color: var(--accent);
 }
 
 .hero-name {

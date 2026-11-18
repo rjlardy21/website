@@ -35,7 +35,7 @@ function PastaPassTracker() {
                         Never-Ending Pasta Pass&reg;
                     </a>{' '}
                     is a limited-run promotion: $100 for unlimited dine-in visits to the
-                    Never-Ending Pasta Bowl&reg; menu &mdash; pasta, sauce, and toppings, plus a
+                    Never-Ending Pasta Bowl&reg; menu: pasta, sauce, and toppings, plus a
                     first course of soup or salad and breadsticks every time. Only 10,000 passes
                     were sold, and it&apos;s dine-in only (no To Go, delivery, or sharing).
                 </p>
@@ -70,7 +70,7 @@ function PastaPassTracker() {
                     value={
                         weightChange != null
                             ? `${weightChange > 0 ? '+' : ''}${weightChange.toFixed(1)} lbs`
-                            : '—'
+                            : 'N/A'
                     }
                     hint={
                         latestWeight != null
@@ -82,7 +82,7 @@ function PastaPassTracker() {
 
             <h2 className="subsection-title">Visit log</h2>
             {visits.length === 0 ? (
-                <p className="section-intro">No visits logged yet &mdash; check back after the next trip.</p>
+                <p className="section-intro">No visits logged yet. Check back after the next trip.</p>
             ) : (
                 <VisitLog visits={visits} />
             )}
